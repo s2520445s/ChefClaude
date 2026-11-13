@@ -7,6 +7,11 @@ export default function Main() {
 
     const [ingredients,setIngredients]=React.useState(["rice","egg","ham","soy sauce"])
     const [recipe, setRecipe] = React.useState("")
+    const recipeSection = React.useRef(null)
+
+    React.useEffect(()=>{
+        recipe&&recipeSection.current? recipeSection.current.scrollIntoView() :null
+    },[recipe])
 
     function add(formData) {
         const newIngredient = formData.get("ingredient")
@@ -28,7 +33,7 @@ export default function Main() {
                 <button>Add ingredient</button>
             </form>
 
-            {ingredients.length>0 ? <List ingredients={ingredients} getRecipe={getRecipe} />:null}
+            {ingredients.length>0 ? <List ingredients={ingredients} getRecipe={getRecipe} ref={recipeSection}/>:null}
 
             {recipe?<Recipe recipe={recipe}/>:null}
 
